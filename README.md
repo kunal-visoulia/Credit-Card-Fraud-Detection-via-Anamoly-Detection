@@ -26,6 +26,7 @@ Isolation Forest showed much better precision and recall than Local Outlier Fact
 
 To have better look at accuracy of the algorithms, I drew Precision-Recall curve and used AUPRC.
 **The curve showed high precision and very low recall and thus area under curve was very low; as confirmed from above**
+![](images/2.png)
 
 - A high area under the curve represents both high recall and high precision, where high precision relates to a low false positive rate, and high recall relates to a low false negative rate. 
 - High scores for both show that the classifier is returning accurate results (high precision), as well as returning a majority of all positive results (high recall).
