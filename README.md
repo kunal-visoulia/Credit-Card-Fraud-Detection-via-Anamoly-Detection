@@ -10,17 +10,19 @@ It contains only numerical input variables which are the result of a PCA transfo
 
 Feature 'Time' contains the seconds elapsed between each transaction and the first transaction in the dataset. The feature 'Amount' is the transaction Amount, this feature can be used for example-dependant cost-senstive learning. Feature 'Class' is the response variable and it takes value 1 in case of fraud and 0 otherwise.
 ```
-Given the class imbalance ratio, we recommend measuring the accuracy using the Area Under the Precision-Recall Curve (AUPRC). Confusion matrix accuracy is not meaningful for unbalanced classification.
+Given the class imbalance ratio, we recommend measuring the accuracy using the Area Under the 
+Precision-Recall Curve (AUPRC).Confusion matrix accuracy is not meaningful for unbalanced 
+classification.
 ```
 ***Due to the Large size of dataset and time-computation constraint, I chose only 10% of that dataset for this project.
-(49 fraud cases out of 28481 records)***
+(28481 records with 49 fraud cases)***
 ## RESULT
 The heatmap of **Correlation matrix** showed almost no correlations between various attributes.
 
 #### ACCURACY SCORE AND CLASSIFICATION REPORT COMPARISONS
 ![](images/1.png)
 
-
+Isolation Forest showed much better precision and recall than Local Outlier Factor while both had almost same accuracy.
 
 ## UNSUPERVISED LEARNING ALGORITHMS
 ### LOCAL OUTLIER FACTOR
