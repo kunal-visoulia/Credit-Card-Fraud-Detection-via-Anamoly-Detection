@@ -34,5 +34,5 @@ To have better look at accuracy of the algorithms, I drew Precision-Recall curve
 - A system with high precision but low recall is just the opposite, returning very few results, but most of its predicted labels are correct when compared to the training labels.
 - An ideal system with high precision and high recall will return many results, with all results labeled correctly.
 ## UNSUPERVISED LEARNING ALGORITHMS
-### LOCAL OUTLIER FACTOR
-### ISOLATION FOREST
+### [LOCAL OUTLIER FACTOR](https://towardsdatascience.com/local-outlier-factor-for-anomaly-detection-cc0c770d2ebe)
+### [ISOLATION FOREST](https://towardsdatascience.com/outlier-detection-with-isolation-forest-3d190448d45e)
