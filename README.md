@@ -40,7 +40,7 @@ Yan Lecun, director of AI research, explains that unsupervised learning — 
 to learn for themselves without having to be explicitly told if everything they do is 
 right or wrong — is the key to “true” AI.
 ```
-![](images/3.png)
+![](images/3.png)<br/>
 The image to the left is an example of supervised learning; we use regression techniques to find the best fit line between the features. While in unsupervised learning the inputs are segregated based on features and the prediction is based on which cluster it belonged.
 
 ### [LOCAL OUTLIER FACTOR](https://towardsdatascience.com/local-outlier-factor-for-anomaly-detection-cc0c770d2ebe)
@@ -49,7 +49,7 @@ The LOF is a calculation that looks at the neighbors of a certain point to find 
 **Parameter k, is the number of neighbors the LOF calculation is considering** While a small k has a more local focus, i.e. looks only at nearby points, it is more erroneous when having much noise in the data. A large k, however, can miss local outliers.
 
 **k-distance** <br/>
-Using parameter k, it is the distance of a point to its kth neighbor. If k was 3, the k-distance would be the distance of a point to the third closest point.
+Using parameter k, it is the distance of a point to its kth neighbor. If k was 3, the k-distance would be the distance of a point to the third closest point.<br/>
 ![](images/4.png)
 
 **Reachability distance** <br/>
@@ -65,11 +65,14 @@ To get the lrd for a point a, we will
 The lrd is then simply the inverse of that average.<br/>
 **lrd(a) = 1/(sum(reach-dist(a,n))/k)** <br/>
 >we are talking about densities and, therefore, the longer the distance to the next neighbors, the sparser the area the respective point is located in. Hence, the less dense — the inverse.
+![](images/5.png)<br/>
+The lrd of the upper right point is the average reachability distance to its nearest neighbors which are points (-1, -1), (-1.5, -1.5) and (-1, -2). These neighbors, however, have other lrds as their nearest neighbors don’t include the upper right point.
 
 **LOF**<br/>
 Fnally, k ratios of the lrd of each point to its neighboring points will be calculated and averaged.<br/>
 The LOF is basically the **average ratio of the lrd of point a to the lrds to its neighboring points**.<br/>
 - If the ratio is greater than 1, the lrd of point a is on average greater than the lrd of its neighbors and, thus, from point a, we have to travel longer distances to get to the next point or cluster of points than from a’s neighbors to their next neighbors.
 - If the density of a point is much smaller than the densities of its neighbors (LOF ≫1), the point is far from dense areas and, hence, an outlier.
+>**Keep in mind, the neighbors of a point a may don’t consider a a neighbor as they have points in their reach which are way closer.**
 
 ### [ISOLATION FOREST](https://towardsdatascience.com/outlier-detection-with-isolation-forest-3d190448d45e)
