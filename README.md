@@ -65,8 +65,8 @@ To get the lrd for a point a, we will
 The lrd is then simply the inverse of that average.<br/>
 **lrd(a) = 1/(sum(reach-dist(a,n))/k)** <br/>
 >we are talking about densities and, therefore, the longer the distance to the next neighbors, the sparser the area the respective point is located in. Hence, the less dense — the inverse.
-![](images/5.png)
 
+![](images/5.png)<br/>
 The lrd of the upper right point is the average reachability distance to its nearest neighbors which are points (-1, -1), (-1.5, -1.5) and (-1, -2). These neighbors, however, have other lrds as their nearest neighbors don’t include the upper right point.
 
 **LOF**<br/>
