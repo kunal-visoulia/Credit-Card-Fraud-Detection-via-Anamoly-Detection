@@ -33,6 +33,43 @@ To have better look at accuracy of the algorithms, I drew Precision-Recall curve
 - A system with high recall but low precision returns many results, but most of its predicted labels are incorrect when compared to the training labels. 
 - A system with high precision but low recall is just the opposite, returning very few results, but most of its predicted labels are correct when compared to the training labels.
 - An ideal system with high precision and high recall will return many results, with all results labeled correctly.
-## UNSUPERVISED LEARNING ALGORITHMS
+## [UNSUPERVISED LEARNING ALGORITHMS](https://towardsdatascience.com/unsupervised-learning-with-python-173c51dc7f03)
+Unsupervised Learning is a class of Machine Learning techniques to find the patterns in data. The data given to unsupervised algorithm are not labelled, which means only the input variables(X) are given with no corresponding output variables.
+```
+Yan Lecun, director of AI research, explains that unsupervised learning — teaching machines
+to learn for themselves without having to be explicitly told if everything they do is 
+right or wrong — is the key to “true” AI.
+```
+![](images/3.png)
+The image to the left is an example of supervised learning; we use regression techniques to find the best fit line between the features. While in unsupervised learning the inputs are segregated based on features and the prediction is based on which cluster it belonged.
+
 ### [LOCAL OUTLIER FACTOR](https://towardsdatascience.com/local-outlier-factor-for-anomaly-detection-cc0c770d2ebe)
+Local Outlier Factor (LOF) is a score that tells how likely a certain data point is an outlier/anomaly.<br/>LOF ≈1 ⇒ not outlier<br/>LOF ≫1 ⇒ outlier<br/>
+The LOF is a calculation that looks at the neighbors of a certain point to find out its density and compare this to the density of other points later on.<br/>
+**Parameter k, is the number of neighbors the LOF calculation is considering** While a small k has a more local focus, i.e. looks only at nearby points, it is more erroneous when having much noise in the data. A large k, however, can miss local outliers.
+
+**k-distance** <br/>
+Using parameter k, it is the distance of a point to its kth neighbor. If k was 3, the k-distance would be the distance of a point to the third closest point.
+![](images/4.png)
+
+**Reachability distance** <br/>
+This distance measure is simply the maximum of the distance of two points and the k-distance of the second point.<br/>
+**reach-dist(a,b) = max{k-distance(b), dist(a,b)}**
+
+>Basically, if point a is within the k neighbors of point b, the reach-dist(a,b) will be the k-distance of b. Otherwise, it will be the real distance of a and b. This is just a “smoothing factor”.
+
+**Local reachability density(lrd)**<br/>
+To get the lrd for a point a, we will 
+- calculate the reachability distance of a to all its k nearest neighbors 
+- take the average of that number.
+The lrd is then simply the inverse of that average.<br/>
+**lrd(a) = 1/(sum(reach-dist(a,n))/k)** <br/>
+>we are talking about densities and, therefore, the longer the distance to the next neighbors, the sparser the area the respective point is located in. Hence, the less dense — the inverse.
+
+**LOF**<br/>
+Fnally, k ratios of the lrd of each point to its neighboring points will be calculated and averaged.<br/>
+The LOF is basically the **average ratio of the lrd of point a to the lrds to its neighboring points**.<br/>
+- If the ratio is greater than 1, the lrd of point a is on average greater than the lrd of its neighbors and, thus, from point a, we have to travel longer distances to get to the next point or cluster of points than from a’s neighbors to their next neighbors.
+- If the density of a point is much smaller than the densities of its neighbors (LOF ≫1), the point is far from dense areas and, hence, an outlier.
+
 ### [ISOLATION FOREST](https://towardsdatascience.com/outlier-detection-with-isolation-forest-3d190448d45e)
