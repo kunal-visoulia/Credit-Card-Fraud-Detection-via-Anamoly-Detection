@@ -43,6 +43,8 @@ right or wrong — is the key to “true” AI.
 ![](images/3.png)<br/>
 The image to the left is an example of supervised learning; we use regression techniques to find the best fit line between the features. While in unsupervised learning the inputs are segregated based on features and the prediction is based on which cluster it belonged.
 
+***A lot of machine learning algorithms suffer in terms of their performance when outliers are not taken care of. In order to avoid this kind of problems you could, for example, drop them from your sample, cap the values at some reasonable point (based on domain knowledge), transform the data or identify them***
+
 ### [LOCAL OUTLIER FACTOR](https://towardsdatascience.com/local-outlier-factor-for-anomaly-detection-cc0c770d2ebe)
 Local Outlier Factor (LOF) is a score that tells how likely a certain data point is an outlier/anomaly.<br/>LOF ≈1 ⇒ not outlier<br/>LOF ≫1 ⇒ outlier<br/>
 The LOF is a calculation that looks at the neighbors of a certain point to find out its density and compare this to the density of other points later on.<br/>
@@ -77,3 +79,23 @@ The LOF is basically the **average ratio of the lrd of point a to the lrds to it
 >**Keep in mind, the neighbors of a point a may don’t consider a a neighbor as they have points in their reach which are way closer.**
 
 ### [ISOLATION FOREST](https://towardsdatascience.com/outlier-detection-with-isolation-forest-3d190448d45e)
+The main idea, which is _different from other popular outlier detection methods_, is that Isolation Forest explicitly identifies anomalies instead of profiling normal data points.<br/> 
+Isolation Forest, like any tree ensemble method, is built on the basis of decision trees. In these trees, partitions are created by first randomly selecting a feature and then selecting a random split value between the minimum and maximum value of the selected feature.
+>**In principle, outliers are less frequent than regular observations and are different from them in terms of values (they lie further away from the regular observations in the feature space). That is why by using such random partitioning they should be identified closer to the root of the tree (shorter average path length, i.e., the number of edges an observation must pass in the tree going from the root to the terminal node), with fewer splits necessary.**
+
+![](images/7.png)<br/>
+The idea of identifying a normal vs. abnormal observation. A normal point (on the left) requires more partitions to be identified than an abnormal point (right).
+
+As with other outlier detection methods, an anomaly score is required for decision making. In case of Isolation Forest it is defined as:<br/>
+![](images/6.png)<br/>
+where h(x) is the path length of observation x, c(n) is the average path length of unsuccessful search in a Binary Search Tree and n is the number of external nodes
+
+- Score close to 1 indicates anomalies
+- Score much smaller than 0.5 indicates normal observations
+- If all scores are close to 0.5 than the entire sample does not seem to have clearly distinct anomalies
+
+
+
+
+
+
