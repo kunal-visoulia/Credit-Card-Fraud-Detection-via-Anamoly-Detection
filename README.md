@@ -45,7 +45,7 @@ So, each point(cross) is one of the unlabeled examples.<br/>
 So, if your new aircraft engine looks like these green cross, it can be identified as okay or anamoly.<br/>
 ![](images/9.png)<br/>
 
-#### DENSITY DETECTION
+### DENSITY DETECTION
 **Formally in the anomaly detection problem**, we're given some data sets, x<sub>1</sub> through x<sub>m</sub> of examples, and we usually *assume that these examples are normal or non-anomalous examples*, and we want an algorithm to tell us if some new example x<sub>test</sub> is anomalous.<br/>
 So given the unlabeled training set, build a model for probability of x, p(x), where x are the features.
 And having built a model, we're then going to say that for the new aircraft engine, if p(x<sub>test</sub>) is less than some epsilon(threshold) then we flag this as an anomaly else it looks okay.<br/>
@@ -55,7 +55,7 @@ Points that lie, somewhere in the middle, will have high probability,whereas poi
 Example Application: **Monitoring computers in a data center**  If you have a lot of machines in a computer cluster or in a data center, we can compute features at each machine: how much memory used, number of disc accesses, CPU load. As well as more complex features like what is the CPU load on this machine divided by the amount of network traffic on this machine. Then given the dataset of how your computers in your data center usually behave, you can **model(p(x)) the probability of these machines having different amounts of memory use or probability of these machines having different numbers of disc accesses or different CPU loads** and so on. And if you ever have a machine whose p(x), is very small then you know that machine is behaving unusually and maybe that machine is about to go down, flag that for review by a system administrator.<br/>
 And this is actually being used today by various data centers to watch out for unusual things happening on their machines.  
 
-#### Gaussian(Normal) Distribution
+### Gaussian(Normal) Distribution
 ![](images/11.png)
 this is the plot of p(x) wrt fixed mean and variance.
 
@@ -64,12 +64,24 @@ this denotes that the p(x) or the gaussian density is parameterized by the two p
 
 ![](images/13.png)<br/>
 
-#### The Parameter Estimation Problem
+### The Parameter Estimation Problem
 Given my data set of "m" examples, you suspect that these examples came from a Gaussian distribution, then, estimate what are the values of mean and variance.<br/>
 ![](images/14.png)<br/>
-**In the variance formula, ML people use m in denominator while in statistics it is(m - 1); which is same given m is large<br/>Two versions have slightly different theoretical math properties. But in practice it really makes very little difference.**
+**In the variance formula, ML people use m in denominator while in statistics it is(m - 1); which is same given m is large. Two versions have slightly different theoretical math properties. But in practice it really makes very little difference.**
 
-#### Develop an Anomaly Detection Algorithm using Gaussian(Normal) Distribution
+### Develop an Anomaly Detection Algorithm using Gaussian(Normal) Distribution
+We're going to try to figure out what are high probability features, what are lower probability types of features.<br/>
+We are going to do is model p(x), where x is a vector, as:<br/>
+Assume that the feature, x<sub>(i)</sub>, is distributed according to a Gaussian distribution, with some mean, mu<sub>(i)</sub> and some variance, (sigma<sub>2</sub>)<sub>(i)</sub>. So,<br/>
+![](images/15.png)<br/>
+The problem of estimating this distribution p(x), is called the **problem of density estimation**.
+
+![](images/16.png)<br/>
+
+**Real-Number evaluation for your algorithm**<br/>
+Do I include this feature or not. If you can run the algorithm with the feature, and run the algorithm without the feature, and just get back a number that tells you, did it improve or worsen performance to add this feature? Then it gives you a much better way with which to decide whether or not to include that feature.
+- Assume you have some labeled data: **y = 0 to denote the normal or the non-anomalous example and y = 1 to denote the anomalous examples** So, so far, we have beem treating anomaly detection as an unsupervised learning problem, using unlabeled data. But if you have some labeled data that specifies what are some anomalous examples, and what are some non-anomalous examples, then this is the standard way of evaluating an anomaly detection algorithm.
+
 
 
 ## [UNSUPERVISED LEARNING ALGORITHMS](https://towardsdatascience.com/unsupervised-learning-with-python-173c51dc7f03)
