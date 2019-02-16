@@ -38,35 +38,35 @@ To have better look at accuracy of the algorithms, I drew Precision-Recall curve
 **Tt's mainly for unsupervised problem, but there's some aspects of it that are also very similar to sort of the supervised learning problem.**
 
 **Motivating Example:** Imagine that you're a manufacturer of aircraft engines, and as your aircraft engines roll off the assembly line, you're doing, QA or quality assurance testing, and as part of that testing you measure features of your aircraft engine, like heat generated, the vibrations and so on(these were actually the features that were collected off actual aircraft engines), if you have manufactured "m" aircraft engines, plot your data,:<br/>
-![](imgages/8.png)<br/>
+![](images/8.png)<br/>
 So, each point(cross) is one of the unlabeled examples.<br/>
 
 **So, the anomaly detection problem is the following:** The next day, you have a new aircraft engine that rolls off the assembly line and your new aircraft engine has some set of features x<sub>test</sub>. What the anomaly detection problem is, we want to know if this aircraft engine is anomalous in any way,(this engine should undergo further testing) else if it looks like an okay engine, it's okay to just ship it to a customer without further testing.<br/>
 So, if your new aircraft engine looks like these green cross, it can be identified as okay or anamoly.<br/>
-![](imgages/9.png)<br/>
+![](images/9.png)<br/>
 
 #### DENSITY DETECTION
 **Formally in the anomaly detection problem**, we're given some data sets, x<sub>1</sub> through x<sub>m</sub> of examples, and we usually *assume that these examples are normal or non-anomalous examples*, and we want an algorithm to tell us if some new example x<sub>test</sub> is anomalous.<br/>
 So given the unlabeled training set, build a model for probability of x, p(x), where x are the features.
 And having built a model, we're then going to say that for the new aircraft engine, if p(x<sub>test</sub>) is less than some epsilon(threshold) then we flag this as an anomaly else it looks okay.<br/>
-![](imgages/10.png)<br/>
+![](images/10.png)<br/>
 Points that lie, somewhere in the middle, will have high probability,whereas points a little bit further out have lower probability.
 
 Example Application: **Monitoring computers in a data center**  If you have a lot of machines in a computer cluster or in a data center, we can compute features at each machine: how much memory used, number of disc accesses, CPU load. As well as more complex features like what is the CPU load on this machine divided by the amount of network traffic on this machine. Then given the dataset of how your computers in your data center usually behave, you can **model(p(x)) the probability of these machines having different amounts of memory use or probability of these machines having different numbers of disc accesses or different CPU loads** and so on. And if you ever have a machine whose p(x), is very small then you know that machine is behaving unusually and maybe that machine is about to go down, flag that for review by a system administrator.<br/>
 And this is actually being used today by various data centers to watch out for unusual things happening on their machines.  
 
 #### Gaussian(Normal) Distribution
-![](imgages/11.png)
+![](images/11.png)
 this is the plot of p(x) wrt fixed mean and variance.
 
-![](imgages/12.png)<br/>
+![](images/12.png)<br/>
 this denotes that the p(x) or the gaussian density is parameterized by the two parameters: mean and variance(i.e,sigma<sup>2</sup>; sigma denotes standard devidation).
 
-![](imgages/13.png)<br/>
+![](images/13.png)<br/>
 
 #### The Parameter Estimation Problem
 Given my data set of "m" examples, you suspect that these examples came from a Gaussian distribution, then, estimate what are the values of mean and variance.<br/>
-![](imgages/14.png)<br/>
+![](images/14.png)<br/>
 **In the variance formula, ML people use m in denominator while in statistics it is(m - 1); which is same given m is large<br/>Two versions have slightly different theoretical math properties. But in practice it really makes very little difference.**
 
 #### Develop an Anomaly Detection Algorithm using Gaussian(Normal) Distribution
