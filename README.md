@@ -35,7 +35,7 @@ To have better look at accuracy of the algorithms, I drew Precision-Recall curve
 - An ideal system with high precision and high recall will return many results, with all results labeled correctly.
 
 ## ANAMOLY DETECTION
-**Tt's mainly for unsupervised problem, but there's some aspects of it that are also very similar to sort of the supervised learning problem.**
+**It's mainly for unsupervised problem, but there's some aspects of it that are also very similar to sort of the supervised learning problem.**
 
 **Motivating Example:** Imagine that you're a manufacturer of aircraft engines, and as your aircraft engines roll off the assembly line, you're doing, QA or quality assurance testing, and as part of that testing you measure features of your aircraft engine, like heat generated, the vibrations and so on(these were actually the features that were collected off actual aircraft engines), if you have manufactured "m" aircraft engines, plot your data,:<br/>
 ![](images/8.png)<br/>
@@ -56,7 +56,7 @@ Example Application: **Monitoring computers in a data center**  If you have a lo
 And this is actually being used today by various data centers to watch out for unusual things happening on their machines.  
 
 ### Gaussian(Normal) Distribution
-![](images/11.png)
+![](images/11.png)<br/>
 this is the plot of p(x) wrt fixed mean and variance.
 
 ![](images/12.png)<br/>
@@ -137,7 +137,7 @@ So  my green example here, this anomaly, right, my x<sub>1</sub> value, is still
 
 - So, **choose features that will take on either very, very large values, or very, very small values, for examples that I think might turn out to be anomalies.** 
 
-**Example: monitoring the computers in a data center <br/>**:
+**Example: monitoring the computers in a data center**: <br/>
 Let's say that in the data set you think that CPU load the network traffic tend to grow linearly with each other. Maybe you are running a bunch of web servers, and so, here if one of the servers is serving a lot of users, Iyou have a very high CPU load, and have a very high network traffic.<br/>
 One of the failure cases is if one of the computers has a job that gets stuck in some infinite loop, and so the CPU load grows, but the network traffic doesn't. In that case, to detect that type of anomaly,you can create a new feature, which might be CPU load divided by network traffic. It will take on a unusually large value if one of the machines has a very large CPU load but not that much network traffic and so this will be a feature **that will help your anomaly detection capture a certain type of anomaly**. 
 
