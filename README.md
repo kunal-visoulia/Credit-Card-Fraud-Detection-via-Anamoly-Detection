@@ -102,6 +102,45 @@ Example:
 
 **Choosing Epsilon and/or Features**: Try many different values of epsilon and/or different features, and then pick the value of epsilon that, let's say, maximizes f1 score(does well) on your cross validation set.
 
+### Anomaly Detection vs. Supervised Learning
+Above we talked about the process of evaluating an anomaly detection algorithm. And there we started to use some labeled data with examples that we knew were either anomalous or not anomalous. <br/>
+And so, the question then arises, **if we have the label data, that we have some examples and know the anomalies, and some of them will not be anomalies. Why don't we just use a supervised learning algorithm to predict whether y = 0 or Y equals 1?
+
+![](images/18.png)<br/>
+- In anamoly detection, when we're doing the process of estimating p(x), affecting all those Gaussian parameters, we need only negative examples to do that. So if you have a lot negative data(normal data;y=0), we can still fit p(x) pretty well. In contrast, for supervised learning, more typically we would have a reasonably large number of both positive and negative examples.
+- For anomaly detection applications, often there are very different types of anomalies.  There are so many things that could go wrong that could the aircraft engine.,etc. And so if that's the case, and if you have a pretty small set of positive examples, then it can be hard for an algorithm, difficult for an algorithm to learn from your small set of positive examples what the anomalies look like. And in particular, **future anomalies may look nothing like the ones you've seen so far**. So maybe in your set of positive examples, you've seen 5 or 10 or 20 different ways that an aircraft engine could go wrong. But maybe tomorrow, you need to detect a totally new set, a totally new type of anomaly. A totally new way for an aircraft engine to be broken, that you've just never seen before. And if that's the case, it might be more promising to just **model the negative examples with this sort of gaussian model p(x) instead of try to hard to model the positive examples(like we do in supervised learning algorithms).** Because tomorrow's anomaly may be nothing like the ones you've seen so far.<br/> **In contrast**, in some other problems, you have enough positive examples for an algorithm to get a sense of what the positive examples are like. In particular, **if you think that future positive examples are likely to be similar to ones in the training set**; then in that setting, it might be more reasonable to have a supervised learning algorithm that looks at all of the positive examples, looks at all of the negative examples, and uses that to try to distinguish between positives and negatives.<br/>
+
+**Comparison by Example:** 
+- For the **spam problem** we usually have enough examples of spam email to see most of these different types of spam email because we have a large set of examples of spam. And that's why we usually think of spam as a supervised learning setting even though there are many different types of spam emails.
+- **Fraud detection**. If you have *many different types of ways for people to try to commit fraud* and a relatively *small number of fraudulent users on your website*, then use an anomaly detection algorithm. In contrast, if you're a very major online retailer and if you actually have had a lot of people commit fraud on your website(you actually have a lot of examples of y=1,) **then sometimes fraud detection could actually shift over to the supervised learning column. But, if you haven't seen that many examples of users doing strange things on your website, then more frequently fraud detection is actually treated as an anomaly detection algorithm rather than a supervised learning algorithm.**
+-  For some manufacturing processes(same applies for monitoring machines in a data center), if you manufacture in very large volumes and you see a lot of bad examples, maybe manufacturing can shift to the supervised learning column as well. But if you haven't seen that many bad examples in your manufacturing process do the anomaly detection. 
+- Whereas, email spam classification, weather prediction, and classifying cancers, if you have equal numbers of positive and negative examples, treat it as supervised learning problem.
+
+### Choosing What Features to Use
+When applying anomaly detection, one of the things that has a huge effect on how well it does, is what features you use.</br>
+- Plot the data or the histogram of the data, to make sure that the data looks vaguely Gaussian before feeding it to anomaly detection algorithm(And, it'll usually work okay, even if your data isn't Gaussian, but this is sort of a nice sanitary check to run.).<br/>
+![](images/19.png)<br/>
+
+If plot a histogram of data,doesn't look like bell shaped curve, this is a very asymmetric distribution, it has a peak way off to one side.Then, play with different transformations(algo might work better) of the data in order to make it look more Gaussian.<br/>
+Example: Take a log transformation of the data and re-plot the histogram</br>
+![](images/20.png)<br/>
+So,for example, what we can do is, replace data x<sub>1</sub> with log(x<sub>1</sub>), maybe replace data x<sub>2</sub> with log(x<sub>2</sub>+c)(c being some constant and try to make plot look as gaussian as possible), and replace data x<sub>3</sub> with x<sub>3</sub><sup>1/2</sup>(take root), replace data x<sub>4</sub> with x<sub>4</sub><sup>1/3</sup>. **So all these are the parameters you can play with to make it as gaussian as possible**
+
+- Choosing What Features to Use via **Error Analysis Procedure**: train a complete algorithm, and run the algorithm on a cross validation set, and look at the examples it gets wrong, and see if we can come up with extra features to help the algorithm do better on the examples that it got wrong in the cross-validation set.<br/>
+In anomaly detection, we are hoping that p(x) will be large for the normal examples and it will be small for the anomalous examples.And so a pretty **common problem would be if p(x) is comparable**, maybe both it is large for both the normal and the anomalous examples and the algorithm fails to flag anomalous example.<br/>
+![](images/21.png)<br/>
+If we use only feature x<sub>1</sub and fit gaussian to this, and let's say that my anomalous example takes on an x value of 2.5. So I plot my anomalous example(green cross). And it's kind of buried in the middle of a bunch of normal examples, and so, just this anomalous example that I've drawn in green, it gets a pretty high probability, where it's the height of the blue curve, and the algorithm fails to flag this as an anomalous example.
+  
+Solution is to look at the training examples (look at what went wrong with that particular aircraft engine), and see, if looking at that example can inspire me to come up with a new feature x<sub>2</sub>, that helps to distinguish between this bad example, compared to the rest of all the normal aircraft engines.<br/>
+![](images/22.png)<br/>
+So  my green example here, this anomaly, right, my x<sub>1</sub> value, is still 2.5. Then maybe my x<sub>2</sub> value, hopefully it takes on a very large value like 3.5 over there, or a very small value.
+
+- So, **choose features that will take on either very, very large values, or very, very small values, for examples that I think might turn out to be anomalies.** 
+
+**Example: monitoring the computers in a data center <br/>**:
+Let's say that in the data set you think that CPU load the network traffic tend to grow linearly with each other. Maybe you are running a bunch of web servers, and so, here if one of the servers is serving a lot of users, Iyou have a very high CPU load, and have a very high network traffic.<br/>
+One of the failure cases is if one of the computers has a job that gets stuck in some infinite loop, and so the CPU load grows, but the network traffic doesn't. In that case, to detect that type of anomaly,you can create a new feature, which might be CPU load divided by network traffic. It will take on a unusually large value if one of the machines has a very large CPU load but not that much network traffic and so this will be a feature **that will help your anomaly detection capture a certain type of anomaly**. 
+
 
 ## [UNSUPERVISED LEARNING ALGORITHMS](https://towardsdatascience.com/unsupervised-learning-with-python-173c51dc7f03)
 Unsupervised Learning is a class of Machine Learning techniques to find the patterns in data. The data given to unsupervised algorithm are not labelled, which means only the input variables(X) are given with no corresponding output variables.
