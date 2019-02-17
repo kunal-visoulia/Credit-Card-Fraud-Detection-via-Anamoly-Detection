@@ -78,10 +78,29 @@ The problem of estimating this distribution p(x), is called the **problem of den
 
 ![](images/16.png)<br/>
 
-**Real-Number evaluation for your algorithm**<br/>
-Do I include this feature or not. If you can run the algorithm with the feature, and run the algorithm without the feature, and just get back a number that tells you, did it improve or worsen performance to add this feature? Then it gives you a much better way with which to decide whether or not to include that feature.
+### Real-Number evaluation for your algorithm
+Do I include this feature in model or not. If you can run the algorithm with the feature, and run the algorithm without the feature, and just get back a number that tells you, did it improve or worsen performance to add this feature? Then it gives you a much better way with which to decide whether or not to include that feature.
 - Assume you have some labeled data: **y = 0 to denote the normal or the non-anomalous example and y = 1 to denote the anomalous examples** So, so far, we have beem treating anomaly detection as an unsupervised learning problem, using unlabeled data. But if you have some labeled data that specifies what are some anomalous examples, and what are some non-anomalous examples, then this is the standard way of evaluating an anomaly detection algorithm.
+- Think of training set as still unlabeled training set; large collection of normal, non-anomalous examples(t's actually okay even if a few anomalies slip into the unlabeled training set).
+- For both the cross validation and test sets, assume that we can include a few known anamolous examples in them.
 
+Example:
+- we have 10K normal aircraft engines(okay even if a few flawed engine slips into the set of 10,000; assuming that the vast majority of these 10,000 examples are good and normal non-anomalous engines.)
+- 20 flawed/anamolous engines<br/>
+**Then, a fairly typical way to split it into the training set, cross validation set and test set(60%-20%-20%) would be as follows:**<br/>
+- Unlabeled training set: 6K good engines(out of thse 10K),i.e, ex. with y = 0. This set is used to fit p(x)
+- Cross-Validation Set: 2K good engines(out of left out 4K from above) + 10 flawed engines
+- Test Set: 2K good engine + 10 flawed (both from remaining data)
+**Putting same 4K in CV and test set not a good ML practice**
+
+![](images/17.png)<br/>
+1. Take the unlabeled training set(majorly normal), and to fit the model p(x). It will fit all those parameters for all the Gaussians on this data.
+2. On the cross validation and the test set, we're going to think of the anomaly detention algorithm as trying to predict the value of y.<br/>
+**And this puts us somewhat more similar to the supervised learning setting, right? Where we have label test set and our algorithm is making predictions on these labels and so we can evaluate it you know by seeing how often it gets these labels right.**
+
+**The good evaluation metrics**: Dataset is skewed so Classification Accuracy can't be used. We use Precision, Recall, F1-Score, etc
+
+**Choosing Epsilon and/or Features**: Try many different values of epsilon and/or different features, and then pick the value of epsilon that, let's say, maximizes f1 score(does well) on your cross validation set.
 
 
 ## [UNSUPERVISED LEARNING ALGORITHMS](https://towardsdatascience.com/unsupervised-learning-with-python-173c51dc7f03)
